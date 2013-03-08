@@ -9,6 +9,21 @@ class Gear
     #@chainring / @cog.to_f <------ road to ruin
     chainring / cog.to_f
   end
+
+  # From this
+  #def gear_inches
+  # #tire goes around the rim twice for diameter
+  # ratio * (rim + (tire * 2))
+  #end
+
+  #to these
+  def gear_inches
+    ratio * diameter
+  end
+
+  def diameter
+    rim + (tire * 2)
+  end
 end
 
 # Write code that embraces change
