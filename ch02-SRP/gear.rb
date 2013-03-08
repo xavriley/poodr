@@ -1,8 +1,9 @@
 class Gear
-  attr_reader :chainring, :cog
-  def initialize(chainring, cog)
+  attr_reader :chainring, :cog, :wheel
+  def initialize(chainring, cog, wheel=nil)
     @chainring = chainring
-    @cog = cog
+    @cog       = cog
+    @wheel     = wheel
   end
 
   def ratio
@@ -12,14 +13,4 @@ class Gear
   def gear_inches
     ratio * wheel.diameter
   end
-
-  Wheel = Struct.new(:rim, :tire) do
-    def diameter
-      rim + (tire * 2)
-    end
-  end
 end
-
-# Isolate extra responsibilities in classes
-#   by using Struct, we can postpone design decisions about whether
-#   to make Wheel public or not (although it obviously warrants it)
