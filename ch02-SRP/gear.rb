@@ -6,27 +6,20 @@ class Gear
   end
 
   def ratio
-    #@chainring / @cog.to_f <------ road to ruin
     chainring / cog.to_f
   end
 
-  # From this
-  #def gear_inches
-  # #tire goes around the rim twice for diameter
-  # ratio * (rim + (tire * 2))
-  #end
-
-  #to these
   def gear_inches
-    ratio * diameter
+    ratio * wheel.diameter
   end
 
-  def diameter
-    rim + (tire * 2)
+  Wheel = Struct.new(:rim, :tire) do
+    def diameter
+      rim + (tire * 2)
+    end
   end
 end
 
-# Write code that embraces change
-# - Depend on behaviour, not data
-#     Wrap instance variables in methods to DRY them up.
-#     Their behaviour can be changed in one place
+# Isolate extra responsibilities in classes
+#   by using Struct, we can postpone design decisions about whether
+#   to make Wheel public or not (although it obviously warrants it)
