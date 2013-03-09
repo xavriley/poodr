@@ -1,13 +1,19 @@
 class Gear
-  attr_reader :chainring, :cog, :wheel
-  def initialize(chainring, cog, wheel)
+  attr_reader :chainring, :cog, :rim, :tire
+  def initialize(chainring, cog, rim, tire)
     @chainring = chainring
     @cog       = cog
-    @wheel     = wheel
+    # Method 1 - declare in initializer
+    @wheel     = Wheel.new(rim, tire)
   end
 
   def gear_inches
     ratio * wheel.diameter
+  end
+
+  # Method 2 - encapsulate in it's own method
+  def wheel
+    @wheel ||= Wheel.new(rim, tire)
   end
 
   def ratio
@@ -31,6 +37,6 @@ end
 
 Gear.new(52, 11, Wheel.new(26, 1.5)).gear_inches
 
-# Dependency injection
-#   in this example Gear only knows that it needs an object that responds to diameter
-#   Gear is smarter because it knows less
+# Isolate Dependencies
+#   If you can't change the initialize, isolate the dependency so
+#   it doesn't spill out into the other methods
