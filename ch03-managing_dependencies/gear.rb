@@ -1,16 +1,12 @@
 class Gear
   attr_reader :chainring, :cog, :wheel
+  # Explicitly define defaults
   def initialize(args)
-    @chainring = args[:chainring]
-    @cog       = args[:cog]
+    @chainring = args[:chainring] || 40
+    @cog       = args[:cog]       || 18
     @wheel     = args[:wheel]
+    # but watch out for hashes with truthy values...
   end
-
-  # ^^^^^^^^^^^^^^^^^
-  # Remove Argument-Order Dependencies
-  #   if you have control of the initialize,
-  #   use a hash to maintain decoupling of 
-  #   dependencies
 
   def gear_inches
     ratio * diameter
