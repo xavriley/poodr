@@ -2,10 +2,11 @@ class Gear
   attr_reader :chainring, :cog, :wheel
   # Explicitly define defaults
   def initialize(args)
-    @chainring = args[:chainring] || 40
-    @cog       = args[:cog]       || 18
+    @chainring = args.fetch(:chainring, 40)
+    @cog       = args.fetch(:cog, 18)
     @wheel     = args[:wheel]
-    # but watch out for hashes with truthy values...
+    # fetch allows more control over the defaults if the key
+    # returns nil
   end
 
   def gear_inches
