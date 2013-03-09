@@ -1,23 +1,25 @@
 class Gear
-  attr_reader :chainring, :cog, :rim, :tire
-  def initialize(chainring, cog, rim, tire)
+  attr_reader :chainring, :cog, :wheel
+  def initialize(chainring, cog, wheel)
     @chainring = chainring
     @cog       = cog
-    # Method 1 - declare in initializer
-    @wheel     = Wheel.new(rim, tire)
+    @wheel     = wheel
   end
 
   def gear_inches
-    ratio * wheel.diameter
-  end
-
-  # Method 2 - encapsulate in it's own method
-  def wheel
-    @wheel ||= Wheel.new(rim, tire)
+    # Imagine some scary maths
+    ratio * diameter
+    # Imagine some more scary maths
   end
 
   def ratio
     chainring / cog.to_f
+  end
+
+  # Isolate the dependency into it's own method
+  # This welcomes change and refactoring later
+  def diameter
+    wheel.diameter
   end
 end
 
@@ -36,7 +38,3 @@ class Wheel
 end
 
 Gear.new(52, 11, Wheel.new(26, 1.5)).gear_inches
-
-# Isolate Dependencies
-#   If you can't change the initialize, isolate the dependency so
-#   it doesn't spill out into the other methods
